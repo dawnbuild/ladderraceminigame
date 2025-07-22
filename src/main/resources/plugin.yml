@@ -1,0 +1,17 @@
+name: eventminigame
+version: '0.0.1'
+main: dawn.eventminigame.Eventminigame
+api-version: '1.21'
+prefix: VisantaRace
+authors: [ dawnbuild ]
+commands:
+  VisaSetLadderRaceGameArea:
+    permission: visantaraminigame.admin
+  VisaStartGame:
+    permission: visantaraminigame.admin
+  VisaStopLadderRaceGame:
+    permission: visantaraminigame.admin
+  VisaSetLadderRaceFinishArea:
+    permission: visantaraminigame.admin
+  VisaSetLadderRaceGameSpawn:
+    permission: visantaraminigame.admin

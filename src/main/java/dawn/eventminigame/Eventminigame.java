@@ -1,0 +1,42 @@
+package dawn.eventminigame;
+
+import dawn.eventminigame.Commands.*;
+import dawn.eventminigame.Listener.EditorModeListener;
+import dawn.eventminigame.Listener.PlayerEvent;
+import org.bukkit.ChatColor;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public final class Eventminigame extends JavaPlugin {
+    static Eventminigame plugin;
+
+    @Override
+    public void onEnable() {
+        // Plugin startup logic
+        plugin=this;
+        this.saveDefaultConfig();
+        this.getCommand("VisaSetLadderRaceGameArea").setExecutor(new CmdVisaSetLadderRaceGameArea());
+        this.getCommand("VisaStartGame").setExecutor(new CmdVisaStartGame());
+        this.getCommand("VisaStopLadderRaceGame").setExecutor(new CmdVisaStopLadderRaceGame());
+        this.getCommand("VisaSetLadderRaceFinishArea").setExecutor(new CmdVisaSetLadderRaceFinishArea());
+        this.getCommand("VisaSetLadderRaceGameSpawn").setExecutor(new CmdVisaSetLadderRaceSpawn());
+        this.getServer().getPluginManager().registerEvents(new EditorModeListener(),this);
+        this.getServer().getPluginManager().registerEvents(new PlayerEvent(),this);
+
+    }
+
+    @Override
+    public void onDisable() {
+        // Plugin shutdown logic
+    }
+
+    public static Eventminigame getInstance(){
+        return plugin;
+    }
+
+    public static String ChatColor(String strings){
+        return ChatColor.translateAlternateColorCodes('&',"&8[&eVisantara&8]&r "+strings);
+    }
+    public static String ChatColorNonPrefix(String strings){
+        return ChatColor.translateAlternateColorCodes('&',strings);
+    }
+}
