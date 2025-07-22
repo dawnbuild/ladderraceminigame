@@ -1,0 +1,29 @@
+LadderRace:
+  #dalam detik lakukan math nya jangan malas!! 300detik = 5menit
+  lamapermainan: 300
+  countdownmulai: 15
+  world:
+    name: "uwu"
+    uuid: uuid
+  Spawn:
+    x: 0
+    y: 0
+    z: 0
+  GameArea:
+    pos1:
+      x: 0
+      y: 0
+      z: 0
+    pos2:
+      x: 0
+      y: 0
+      z: 0
+  FinishArea:
+    pos1:
+      x: 0
+      y: 0
+      z: 0
+    pos2:
+      x: 0
+      y: 0
+      z: 0
