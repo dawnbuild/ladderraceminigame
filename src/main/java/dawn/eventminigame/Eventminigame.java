@@ -3,7 +3,11 @@ package dawn.eventminigame;
 import dawn.eventminigame.Commands.*;
 import dawn.eventminigame.Listener.EditorModeListener;
 import dawn.eventminigame.Listener.PlayerEvent;
+import dawn.eventminigame.Player.PlayerManager;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Eventminigame extends JavaPlugin {
@@ -19,6 +23,8 @@ public final class Eventminigame extends JavaPlugin {
         this.getCommand("VisaStopLadderRaceGame").setExecutor(new CmdVisaStopLadderRaceGame());
         this.getCommand("VisaSetLadderRaceFinishArea").setExecutor(new CmdVisaSetLadderRaceFinishArea());
         this.getCommand("VisaSetLadderRaceGameSpawn").setExecutor(new CmdVisaSetLadderRaceSpawn());
+        this.getCommand("VisaSetGate").setExecutor(new CmdVisaSetGate());
+        this.getCommand("VisaReload").setExecutor(new CmdVisaReloadConfig());
         this.getServer().getPluginManager().registerEvents(new EditorModeListener(),this);
         this.getServer().getPluginManager().registerEvents(new PlayerEvent(),this);
 
@@ -38,5 +44,21 @@ public final class Eventminigame extends JavaPlugin {
     }
     public static String ChatColorNonPrefix(String strings){
         return ChatColor.translateAlternateColorCodes('&',strings);
+    }
+
+    public static void sendTittleToAllPlayer(String Title,String subTitle){
+        for(Player player: PlayerManager.playerManager.keySet()){
+            player.sendTitle(Eventminigame.ChatColorNonPrefix(Title),Eventminigame.ChatColorNonPrefix(subTitle));
+        }
+    }
+
+    public static void playSoundToAllPlayer(Sound sound){
+        for(Player player: PlayerManager.playerManager.keySet()){
+            player.playSound(player,sound,1.0f,1.0f);
+        }
+    }
+
+    public static void changePlayerGamemode(Player player,GameMode gameMode){
+        player.setGameMode(gameMode);
     }
 }

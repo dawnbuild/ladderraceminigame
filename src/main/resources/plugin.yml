@@ -15,3 +15,7 @@ commands:
     permission: visantaraminigame.admin
   VisaSetLadderRaceGameSpawn:
     permission: visantaraminigame.admin
+  VisaSetGate:
+    permission: visantaraminigame.admin
+  VisaReload:
+    permission: visantaraminigame.admin

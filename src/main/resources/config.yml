@@ -1,7 +1,19 @@
 LadderRace:
   #dalam detik lakukan math nya jangan malas!! 300detik = 5menit
+  allowpvp: false
+  maxplayerwin: 1
   lamapermainan: 300
   countdownmulai: 15
+  gate:
+    block: WHITE_WOOL
+    pos1:
+      x: 0
+      y: 0
+      z: 0
+    pos2:
+      x: 0
+      y: 0
+      z: 0
   world:
     name: "uwu"
     uuid: uuid
@@ -27,3 +39,10 @@ LadderRace:
       x: 0
       y: 0
       z: 0
+
+Scoreboard:
+  tick: 1
+  title: "LadderRace"
+  scoreboard:
+    - "Timer: %timer%"
+    - "Winners: %winner%"

@@ -23,10 +23,12 @@ public class EditorModeListener implements Listener {
                     player.sendMessage(Eventminigame.ChatColor("&c&lPOS 1 SET &8[&c!&8]"));
                     editorMode.get(player).setLoc1(e.getClickedBlock().getLocation());
                     e.setCancelled(true);
+                    break;
                 case RIGHT_CLICK_BLOCK:
                     player.sendMessage(Eventminigame.ChatColor("&c&lPOS 2 SET &8[&c!&8]"));
                     editorMode.get(player).setLoc2(e.getClickedBlock().getLocation());
                     e.setCancelled(true);
+                    break;
             }
         }
     }
