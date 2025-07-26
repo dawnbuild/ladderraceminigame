@@ -1,5 +1,8 @@
 LadderRace:
   #dalam detik lakukan math nya jangan malas!! 300detik = 5menit
+  knockback-stick-max-use: 2
+  afterGameStopTeleportWinner: world
+
   allowpvp: false
   maxplayerwin: 1
   lamapermainan: 300
@@ -40,6 +43,18 @@ LadderRace:
       y: 0
       z: 0
 
+Message:
+  prefix: "&b&lVISANTARA &e&// &r"
+  broadcast:
+    playerstatewin: "%prefix% %player% just finish the race in %timer%"
+    adminstartgame: "%prefix% admin just start a game!"
+    adminstopgame: "%prefix% admin just stop a game!"
+    countdown: "%prefix% game will start in %countdown%"
+    gamestatestop: "%prefix% &cthe game just ended!!"
+  player:
+    playerstateplaying: "%prefix% message %player% message"
+    playerstatewin: "%prefix% You'v win in %timer%"
+    playerstatelose: "%prefix% You lose!!"
 Scoreboard:
   tick: 1
   title: "LadderRace"

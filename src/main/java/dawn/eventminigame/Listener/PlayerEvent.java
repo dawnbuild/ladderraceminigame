@@ -2,7 +2,7 @@ package dawn.eventminigame.Listener;
 
 import dawn.eventminigame.Commands.CmdVisaStartGame;
 import dawn.eventminigame.Eventminigame;
-import dawn.eventminigame.MiniGames.LadderRace.GameState;
+import dawn.eventminigame.MiniGames.GameState;
 import dawn.eventminigame.Player.PlayerManager;
 import dawn.eventminigame.Player.PlayerState;
 import org.bukkit.entity.Player;
@@ -11,10 +11,21 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerEvent implements Listener {
+
+
+    @EventHandler
+    public void playerLeaveEvent(PlayerQuitEvent e){
+        Player player = e.getPlayer();
+        if (player.isOp()) return;
+        if (PlayerManager.isPlayerPlaying(player)){
+            PlayerManager.setPlayerState(player,PlayerState.LOSER);
+        }
+    }
 
     @EventHandler
     public void playerBreakBlockEvent(BlockBreakEvent e){
@@ -30,6 +41,16 @@ public class PlayerEvent implements Listener {
         Player player = e.getPlayer();
         if (player.isOp()) return;
         if (PlayerManager.isPlayerPlaying(player)){
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void cancelPlayerDeath(PlayerDeathEvent e){
+        Player player = e.getPlayer();
+        if (player.isOp()) return;
+        if (PlayerManager.isPlayerPlaying(player)){
+            player.setHealth(20);
             e.setCancelled(true);
         }
     }

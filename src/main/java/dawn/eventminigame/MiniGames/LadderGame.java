@@ -1,7 +1,9 @@
-package dawn.eventminigame.MiniGames.LadderRace;
+package dawn.eventminigame.MiniGames;
 
 import dawn.eventminigame.Area;
+import dawn.eventminigame.ConfigManager;
 import dawn.eventminigame.Eventminigame;
+import dawn.eventminigame.MiniGames.CustomItem.CustomItemManager;
 import dawn.eventminigame.Player.PlayerManager;
 import dawn.eventminigame.Player.PlayerState;
 import dawn.eventminigame.Player.ScoreboardManager;
@@ -11,9 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 public class LadderGame {
@@ -35,9 +35,11 @@ public class LadderGame {
     int countdown = Eventminigame.getInstance().getConfig().getInt("LadderRace.countdownmulai");
     GameState gameState = null;
     public static int totalWinner = 0;
-
     BukkitTask task;
     public static BukkitTask stTask;
+
+    int currentTime = 0;
+
     public void setGameState(GameState gameState){
         this.gameState = gameState;
         stTask = task;
@@ -56,15 +58,17 @@ public class LadderGame {
                 ScoreboardManager.addPlayerScoreboard();
                 List<Block> blocks = gerbang.getBlocks();
                 Eventminigame.sendTittleToAllPlayer(Eventminigame.ChatColor("&aGame Will Start in &b" + countdown),"Get Ready!!");
-                Bukkit.broadcastMessage(Eventminigame.ChatColor("&aGame Will Start in &b" + countdown));
+                ConfigManager.sendBroadcastMessage("countdown",countdown);
                  task = new BukkitRunnable() {
                     int maxWinner = Eventminigame.getInstance().getConfig().getInt("LadderRace.maxplayerwin");
                     int timer = 0;
                     boolean opendoor = true;
+
                     @Override
                     public void run() {
                         if (countdown<0){
                             ScoreboardManager.update(timer);
+                            currentTime=timer;
                             //MULAI GAME
                             if (opendoor){
                                 opendoor=false;
@@ -72,6 +76,7 @@ public class LadderGame {
                                 for (Block block : blocks){
                                     block.setType(Material.AIR);
                                 }
+                                CustomItemManager.giveKBStickToAll();
                                 Eventminigame.playSoundToAllPlayer(Sound.ENTITY_ENDER_DRAGON_GROWL);
                                 Eventminigame.sendTittleToAllPlayer("&aGood Luck!!","&aHave Fun!!");
                             }
@@ -83,27 +88,23 @@ public class LadderGame {
                         }if (countdown <= 10 && countdown>=0){
                             Eventminigame.playSoundToAllPlayer(Sound.BLOCK_NOTE_BLOCK_BELL);
                             Eventminigame.sendTittleToAllPlayer("&eGet Ready!!","&aGame Starting in &b" + countdown);
-                            Bukkit.broadcastMessage(Eventminigame.ChatColor("&aGame Will Start in &b" + countdown));
+                            ConfigManager.sendBroadcastMessage("countdown",countdown);
                         }
                         countdown--;
                     }
                 }.runTaskTimer(Eventminigame.getInstance(), 0L, 20L);
                 break;
             case STOP:
-                for (Player loser : PlayerManager.playerManager.keySet()){
-                    if (PlayerManager.playerManager.get(loser)==PlayerState.PLAYING){
-                        PlayerManager.setPlayerState(loser,PlayerState.LOSER);
-                    }
-                }
+                totalWinner = 0;
+                PlayerManager.clearAllPlayer();
                 for (Block block : gerbang.getBlocks()){
                     if (block.getType().equals(Material.AIR))block.setType(Material.WHITE_WOOL);
                 }
                 PlayerManager.saveWinnerData();
-                Bukkit.broadcastMessage(Eventminigame.ChatColor("&cWaktu habis, terimakasih telah bermain!!"));
+                Eventminigame.sendTittleToAllPlayer("&bLadderRace","&cGame Ended!!");
+                ConfigManager.sendBroadcastMessage("gamestatestop",0);
                 task.cancel();
-                ScoreboardManager.sb.clear();
                 break;
-
         }
     }
 
@@ -128,6 +129,10 @@ public class LadderGame {
     }
     public Area getFinishArea() {
         return FinishArea;
+    }
+
+    public int getCurrentTime(){
+        return currentTime;
     }
 
 }

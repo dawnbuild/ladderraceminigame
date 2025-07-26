@@ -3,6 +3,8 @@ package dawn.eventminigame;
 import dawn.eventminigame.Commands.*;
 import dawn.eventminigame.Listener.EditorModeListener;
 import dawn.eventminigame.Listener.PlayerEvent;
+import dawn.eventminigame.MiniGames.CustomItem.CustomItemManager;
+import dawn.eventminigame.MiniGames.CustomItem.ItemFunc;
 import dawn.eventminigame.Player.PlayerManager;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -18,6 +20,11 @@ public final class Eventminigame extends JavaPlugin {
         // Plugin startup logic
         plugin=this;
         this.saveDefaultConfig();
+        this.getCommand("VisaGiveKBStick").setExecutor(new CmdVisaGiveKBStick());
+        this.getCommand("VisaGiveKBStick").setTabCompleter(new CmdVisaGiveKBStick());
+
+        CustomItemManager.registerItem();
+
         this.getCommand("VisaSetLadderRaceGameArea").setExecutor(new CmdVisaSetLadderRaceGameArea());
         this.getCommand("VisaStartGame").setExecutor(new CmdVisaStartGame());
         this.getCommand("VisaStopLadderRaceGame").setExecutor(new CmdVisaStopLadderRaceGame());
@@ -26,6 +33,7 @@ public final class Eventminigame extends JavaPlugin {
         this.getCommand("VisaSetGate").setExecutor(new CmdVisaSetGate());
         this.getCommand("VisaReload").setExecutor(new CmdVisaReloadConfig());
         this.getServer().getPluginManager().registerEvents(new EditorModeListener(),this);
+        this.getServer().getPluginManager().registerEvents(new ItemFunc(),this);
         this.getServer().getPluginManager().registerEvents(new PlayerEvent(),this);
 
     }
@@ -40,15 +48,11 @@ public final class Eventminigame extends JavaPlugin {
     }
 
     public static String ChatColor(String strings){
-        return ChatColor.translateAlternateColorCodes('&',"&8[&eVisantara&8]&r "+strings);
-    }
-    public static String ChatColorNonPrefix(String strings){
         return ChatColor.translateAlternateColorCodes('&',strings);
     }
-
     public static void sendTittleToAllPlayer(String Title,String subTitle){
         for(Player player: PlayerManager.playerManager.keySet()){
-            player.sendTitle(Eventminigame.ChatColorNonPrefix(Title),Eventminigame.ChatColorNonPrefix(subTitle));
+            player.sendTitle(Eventminigame.ChatColor(Title),Eventminigame.ChatColor(subTitle));
         }
     }
 

@@ -1,9 +1,8 @@
 package dawn.eventminigame.Commands;
 
+import dawn.eventminigame.ConfigManager;
 import dawn.eventminigame.Eventminigame;
-import dawn.eventminigame.MiniGames.LadderRace.GameState;
-import dawn.eventminigame.Player.PlayerManager;
-import dawn.eventminigame.Player.PlayerState;
+import dawn.eventminigame.MiniGames.GameState;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,7 +17,7 @@ public class CmdVisaStopLadderRaceGame implements CommandExecutor {
         if (!sender.hasPermission("visantaraminigame.admin") || !sender.isOp()) return false;
         CmdVisaStartGame.ladderGame.setGameState(GameState.STOP);
         sender.sendMessage(Eventminigame.ChatColor("&cSemua player telah dinyatakan gugur!!"));
-        Bukkit.broadcastMessage(Eventminigame.ChatColor("&cAdmin just stop the game!! &7[&c!&7]"));
+        ConfigManager.sendBroadcastMessage("adminstopgame",(Player) sender);
         return true;
     }
 }

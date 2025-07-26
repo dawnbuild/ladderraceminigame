@@ -1,7 +1,7 @@
 package dawn.eventminigame.Commands;
 
 import dawn.eventminigame.Eventminigame;
-import dawn.eventminigame.MiniGames.LadderRace.LadderGame;
+import dawn.eventminigame.MiniGames.LadderGame;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
